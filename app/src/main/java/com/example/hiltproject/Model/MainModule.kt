@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,7 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainModule {
 
     @Provides
-    fun providesRetrofit() : Retrofit {
+    @Named("catFactRetrofit")
+    fun providesCatFactRetrofit() : Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://catfact.ninja")
             .addConverterFactory(GsonConverterFactory.create())
@@ -23,7 +25,17 @@ class MainModule {
     }
 
     @Provides
-    fun providesRetrofitServices(retrofit: Retrofit) : RetrofitServices {
+    @Named("dogFaceRetrofit")
+    fun providesDogFaceRetrofit() : Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://catfact.ninja")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
+
+    @Provides
+    fun providesRetrofitServices(@Named("dogFaceRetrofit") retrofit: Retrofit) : RetrofitServices {
         return retrofit.create(RetrofitServices::class.java)
     }
 }
