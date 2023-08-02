@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
-import com.example.hiltproject.DataType.CatFactData
+import com.example.hiltproject.ViewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -59,6 +55,6 @@ class MainFragment(): Fragment() {
 
     private fun initData(){
         catFactCount = arguments?.getInt(MainActivity.CAT_FACT, 1) ?: 1
-        viewModel.getCatFact(catFactCount)
+        viewModel.getCatFact() // catFactCount
     }
 }
